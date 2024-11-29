@@ -10,8 +10,12 @@ class IngredientType(DjangoObjectType):
         model = Ingredient
 
 class RecipeType(DjangoObjectType):
+    ingredient_count = graphene.Int()
     class Meta:
         model = Recipe
+
+    def resolve_ingredient_count(self, info):
+        return self.ingredients.count()
 
 # Mutations for Ingredient
 class CreateIngredient(graphene.Mutation):
@@ -165,16 +169,6 @@ class Query(graphene.ObjectType):
 
     def resolve_recipe_by_id(self, info, id):
         return Recipe.objects.get(pk=id)
-
-# Calculated field for ingredient count
-class RecipeType(DjangoObjectType):
-    ingredient_count = graphene.Int()
-
-    class Meta:
-        model = Recipe
-
-    def resolve_ingredient_count(self, info):
-        return self.ingredients.count()
 
 class Mutation(graphene.ObjectType):
     create_ingredient = CreateIngredient.Field()

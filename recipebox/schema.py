@@ -22,9 +22,14 @@ class CreateIngredient(graphene.Mutation):
         description = graphene.String()
 
     def mutate(self, info, name, description=None):
-        ingredient = Ingredient(name=name, description=description)
-        ingredient.save()
-        return CreateIngredient(ingredient=ingredient)
+        ingredient_data = {
+            'name': name,
+            'description': description
+        }
+        serializer = IngredientSerializer(data=ingredient_data)
+        if serializer.is_valid():
+            ingredient = serializer.save()
+            return CreateIngredient(ingredient=ingredient)
 
 class UpdateIngredient(graphene.Mutation):
     ingredient = graphene.Field(IngredientType)
@@ -34,12 +39,17 @@ class UpdateIngredient(graphene.Mutation):
         name = graphene.String()
         description = graphene.String()
 
-    def mutate(self, info, id, name, description=None):
+    def mutate(self, info, id, name=None, description=None):
         ingredient = Ingredient.objects.get(pk=id)
-        ingredient.name = name
-        ingredient.description = description
-        ingredient.save()
-        return UpdateIngredient(ingredient=ingredient)
+        ingredient_data = {
+            'name': name or ingredient.name,
+            'description': description or ingredient.description
+        }
+        serializer = IngredientSerializer(ingredient, data=ingredient_data, partial=True)
+        if serializer.is_valid():
+            ingredient = serializer.save()
+            return UpdateIngredient(ingredient=ingredient)
+        
 
 class DeleteIngredient(graphene.Mutation):
     success = graphene.Boolean()
@@ -62,11 +72,16 @@ class CreateRecipe(graphene.Mutation):
         ingredients = graphene.List(graphene.ID)
 
     def mutate(self, info, title, instructions, ingredients=None):
-        recipe = Recipe(title=title, instructions=instructions)
-        recipe.save()
-        if ingredients:
-            recipe.ingredients.set(ingredients)
-        return CreateRecipe(recipe=recipe)
+        recipe_data = {
+            'title': title,
+            'instructions': instructions,
+            'ingredients': ingredients
+        }
+        serializer = RecipeSerializer(data=recipe_data)
+        if serializer.is_valid():
+            recipe = serializer.save()
+            return CreateRecipe(recipe=recipe)
+        
 
 class AddIngredientInRecipe(graphene.Mutation):
     # Similar to CreateRecipe mutation

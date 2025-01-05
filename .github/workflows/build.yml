@@ -43,4 +43,5 @@ jobs:
 
     - name: View the server logs (for debugging)
       run: |
-        tail -n 50 /path/to/django/server/logs # Adjust path accordingly to capture logs
+        tail -n 50 /path/to/django/logs/django_error.log
+ # Adjust path accordingly to capture logs

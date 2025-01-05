@@ -22,7 +22,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import obtain_auth_token
-
+from django.http import HttpResponse
 
 
 urlpatterns = [

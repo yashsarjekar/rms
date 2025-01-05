@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
 

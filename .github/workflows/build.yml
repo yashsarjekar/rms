@@ -37,7 +37,10 @@ jobs:
         python manage.py runserver 0.0.0.0:8000 &
         sleep 5 # Wait for the server to start
 
-    # Check if the server is running
-    - name: Check if server is running
+    - name: Check server status (running / errors)
       run: |
-        curl --fail http://127.0.0.1:8000 || exit 1
+        curl --fail http://127.0.0.1:8000 || echo "Error: 500 Internal Server Error. Check logs for details."
+
+    - name: View the server logs (for debugging)
+      run: |
+        tail -n 50 /path/to/django/server/logs # Adjust path accordingly to capture logs

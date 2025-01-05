@@ -26,6 +26,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 
 urlpatterns = [
+    path('', lambda request: HttpResponse("Hello, world!")),
     path('admin/', admin.site.urls),
     path('graphql/', csrf_exempt(AuthenticatedGraphQLView.as_view(graphiql=True))),
     path('api/token/', get_user_token)

@@ -43,4 +43,4 @@ spec:
     - protocol: TCP
       port: 80  # Exposed service port
       targetPort: 8000  # Django app's container port
-  type: LoadBalancer  # For internal communication. Change to LoadBalancer if needed for external access.
+  type: LoadBalancer

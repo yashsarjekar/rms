@@ -34,7 +34,7 @@ jobs:
       run: |
         python manage.py makemigrations
         python manage.py migrate
-        python manage.py runserver 0.0.0.0:8000 &
+        python manage.py runserver &
         sleep 10 # Wait for the server to start
 
     - name: Check server status (running / errors)

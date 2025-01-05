@@ -36,11 +36,6 @@ jobs:
       run: |
         aws eks update-kubeconfig --name $CLUSTER_NAME --region $AWS_REGION
 
-    - name: Deploy on K8s
-      env:
-        IMAGE_URL: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/backend
-        ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-
     - name: Deploy to Kubernetes
       env:
         IMAGE_URL: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/backend

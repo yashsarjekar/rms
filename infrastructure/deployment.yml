@@ -16,7 +16,7 @@ spec:
       containers:
       - name: rms
         # Use the ECR image. Replace <aws_account_id>, <region>, and <image_name> accordingly
-        image: ${IMAGE_URL}:latest
+        image: ${IMAGE_URL}:new
         ports:
         - containerPort: 8000  # Django app running on port 8000
         env:
